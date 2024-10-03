@@ -4,6 +4,6 @@ select p.firstName, p.lastName, ad.city, ad.state
 from
     Person p
         left outer join
-    Address ad on p.personid = ad.personid
+    Address ad on p.personId = ad.personId
 
 
