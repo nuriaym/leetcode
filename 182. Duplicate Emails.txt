@@ -1,8 +1,0 @@
-/* Write your T-SQL query statement below */
-
---https://leetcode.com/problems/duplicate-emails/
-
-select Email
-from Person
-group by Email
-having count (Email) > 1
