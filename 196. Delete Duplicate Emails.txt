@@ -1,0 +1,18 @@
+/* Write your T-SQL query statement below */
+
+--https://leetcode.com/problems/delete-duplicate-emails/
+
+with Person_CTE ( id, email )
+as
+(
+    select min ( id ), email
+    from Person
+    group by email
+    having count ( email ) > 1
+)
+delete Person
+from 
+    Person p
+        inner join
+    Person_CTE pc on p.email = pc.email
+        and p.id <> pc.id
