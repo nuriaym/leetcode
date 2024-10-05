@@ -1,0 +1,20 @@
+/* Write your T-SQL query statement below */
+
+--https://leetcode.com/problems/rising-temperature/?source=submission-noac
+
+with Temp_CTE
+as
+(
+    select
+        recordDate,
+        temperature,
+        idNext = lead ( id ) over ( order by recordDate ),
+        recordDateNext = lead ( recordDate ) over ( order by recordDate ),
+        tempNext = lead ( temperature ) over ( order by recordDate )
+    from Weather
+)
+select id = idNext
+from Temp_CTE
+where
+    tempNext > temperature
+    and datediff ( day, recordDate, recordDateNext ) = 1
