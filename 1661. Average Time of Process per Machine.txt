@@ -2,6 +2,8 @@
 
 /* https://leetcode.com/problems/average-time-of-process-per-machine */
 
+/*
+----first version
 --first tab - tab with start time
 with TabProcStart ( machine_id, timestamp )
 as
@@ -33,3 +35,17 @@ from
     TabProcStart prSt
         inner join
     TabProcEnd prEnd on prSt.machine_id = prEnd.machine_id
+*/
+
+select
+    machine_id,
+    processing_time = 
+        round
+            ( 
+                avg ( case when activity_type = 'end' then timestamp end )
+                -
+                avg ( case when activity_type = 'start' then timestamp end ),
+                3
+            )
+from Activity
+group by machine_id
