@@ -1,0 +1,9 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/ */
+
+select empU.unique_id, emp.name
+from
+    Employees emp
+        left join
+    EmployeeUNI empU on emp.id = empU.id
