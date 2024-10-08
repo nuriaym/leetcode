@@ -1,0 +1,26 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/students-and-examinations */
+
+with TabStudSubj
+as
+(
+    select *
+    from
+        Students
+            cross join
+        Subjects
+)
+select
+    stSubj.student_id,
+    stSubj.student_name,
+    stSubj.subject_name,
+    attended_exams = count ( exam.subject_name )
+from
+    TabStudSubj stSubj
+        left join
+    Examinations exam 
+        on stSubj.student_id = exam.student_id
+        and stSubj.subject_name = exam.subject_name
+group by stSubj.student_id, stSubj.student_name, stSubj.subject_name
+order by stSubj.student_id, stSubj.subject_name
