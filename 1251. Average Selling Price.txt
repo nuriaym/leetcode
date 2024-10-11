@@ -1,0 +1,23 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/average-selling-price */
+
+select
+    pr.product_id,
+    average_price = 
+        isnull
+        (
+            round
+            (
+                sum ( pr.price * un.units ) / cast ( sum ( un.units ) as decimal ),
+                2 
+            ),
+            0
+        )
+from
+    Prices pr
+        left join
+    UnitsSold un 
+        on pr.product_id = un.product_id
+        and un.purchase_date between pr.start_date and pr.end_date
+group by pr.product_id
