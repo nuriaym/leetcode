@@ -1,0 +1,12 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/project-employees-i */
+
+select
+    p.project_id,
+    average_years = round ( avg ( cast ( emp.experience_years as decimal ) ), 2 )
+from
+    Project p
+        inner join
+    Employee emp on p.employee_id = emp.employee_id
+group by p.project_id
