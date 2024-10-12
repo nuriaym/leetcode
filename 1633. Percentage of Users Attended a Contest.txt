@@ -1,0 +1,38 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/percentage-of-users-attended-a-contest */
+--first version
+with ProcTab
+as
+(
+    select
+        contest_id,
+        percentage = 
+        round
+        (
+            count ( user_id )
+            / 
+            ( select cast ( count ( user_id ) as decimal ) from Users ) 
+            * 100,
+            2 
+        )
+    from Register
+    group by contest_id
+)
+select *
+from ProcTab
+order by percentage desc, contest_id asc
+
+--second version
+select
+    contest_id,
+    percentage = 
+    round
+    (
+        100 * count ( user_id )
+        / ( select cast ( count ( user_id ) as decimal ) from Users ),
+        2 
+    )
+from Register
+group by contest_id
+order by percentage desc, contest_id asc
