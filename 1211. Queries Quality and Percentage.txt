@@ -1,0 +1,31 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/queries-quality-and-percentage */
+
+with CountPoorRating
+as
+(
+    select query_name, count_rating = count ( rating )
+    from Queries
+    where rating < 3
+    group by query_name
+)
+select
+    qr.query_name,
+    quality = round ( avg ( qr.rating / cast ( qr.position as decimal ) ), 2 ),    
+    poor_query_percentage = 
+        isnull 
+        (
+            round
+            ( 
+                cnt.count_rating / cast ( count ( qr.rating ) as decimal ) * 100,
+                2 
+            ), 
+            0
+        )
+from
+    Queries qr
+        left join
+    CountPoorRating cnt on qr.query_name = cnt.query_name
+where qr.query_name is not null
+group by qr.query_name, cnt.count_rating
