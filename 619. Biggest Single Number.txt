@@ -1,0 +1,17 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/biggest-single-number */
+
+with NumTab
+as
+(  
+    select num =
+        case
+            when count ( num ) = 1 then num
+            else null
+        end
+    from MyNumbers
+    group by num
+)
+select num = max ( num )
+from NumTab
