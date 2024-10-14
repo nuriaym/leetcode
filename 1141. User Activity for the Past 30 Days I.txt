@@ -1,0 +1,28 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/user-activity-for-the-past-30-days-i */
+--first version
+/*
+with ActiveUsers
+as
+(
+    select 
+        day = activity_date,
+        user_id
+    from Activity
+    where activity_date between dateadd ( day, -29, '2019-07-27' ) and '2019-07-27'
+    group by activity_date, user_id
+)
+select
+    day,
+    active_users = count ( user_id )
+from ActiveUsers
+group by day
+*/
+
+ select 
+    day = activity_date,
+    active_users = count ( distinct user_id )
+from Activity
+where activity_date between dateadd ( day, -29, '2019-07-27' ) and '2019-07-27'
+group by activity_date
