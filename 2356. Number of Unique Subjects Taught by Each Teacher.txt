@@ -1,0 +1,7 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher */
+
+select teacher_id, cnt = count ( distinct subject_id )
+from Teacher
+group by teacher_id
