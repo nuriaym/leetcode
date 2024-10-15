@@ -1,0 +1,8 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/find-followers-count */
+
+select user_id, followers_count = count ( follower_id )
+from Followers
+group by user_id
+order by user_id asc
