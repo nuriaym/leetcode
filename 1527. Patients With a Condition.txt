@@ -1,0 +1,9 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/patients-with-a-condition */
+
+select *
+from Patients
+where
+    patindex ( 'DIAB1%', conditions ) > 0
+    or patindex ( '% DIAB1%', conditions ) > 0
