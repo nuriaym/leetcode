@@ -1,0 +1,12 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/fix-names-in-a-table/description */
+
+select
+    user_id,
+    name = 
+        upper ( substring ( name, 1, 1 ) )
+        +
+        lower ( substring ( name, 2, len ( name ) - 1) )
+from Users
+order by user_id
