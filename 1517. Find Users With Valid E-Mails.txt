@@ -1,0 +1,11 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/find-users-with-valid-e-mails */
+
+
+select *
+from Users
+where
+    charindex ( '@leetcode.com', mail ) > 0
+    and substring ( mail, 1, 1 ) like '[A-Za-z]'
+    and substring ( mail, 1, len ( mail ) - 13 ) not like '%[^A-Za-z0-9_.-]%'
