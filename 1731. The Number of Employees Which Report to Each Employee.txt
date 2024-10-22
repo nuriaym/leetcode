@@ -1,0 +1,18 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/the-number-of-employees-which-report-to-each-employee */
+
+select
+    mg.employee_id,
+    mg.name,
+    reports_count = count ( emp.reports_to ),
+    average_age = round ( avg ( cast ( emp.age as float ) ), 0 ) --age is int
+    --avg of int is int, need to convert to round to biggest way
+from
+    Employees mg
+        inner join
+    Employees emp 
+        on mg.employee_id = emp.reports_to
+        and emp.reports_to is not null
+group by mg.employee_id, mg.name
+order by mg.employee_id
