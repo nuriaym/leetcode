@@ -1,0 +1,15 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/employees-whose-manager-left-the-company */
+
+select emp.employee_id
+from
+    Employees emp
+        left join
+    Employees mg 
+        on emp.manager_id = mg.employee_id
+where
+    emp.salary < 30000
+    and emp.manager_id is not null
+    and mg.employee_id is null
+order by emp.employee_id
