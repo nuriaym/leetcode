@@ -1,0 +1,29 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/primary-department-for-each-employee */
+
+with EmpDepCnt
+as
+(
+    select
+        employee_id,
+        cnt = 
+            case
+                when count ( employee_id ) = 1 then 1
+                when count ( employee_id ) > 1 then 2
+            end
+    from Employee
+    group by employee_id
+)
+select
+    dep.employee_id,
+    dep.department_id
+from
+    Employee dep
+        inner join
+    EmpDepCnt emp on dep.employee_id = emp.employee_id
+where
+    primary_flag = 'Y' 
+    or cnt = 1
+
+
