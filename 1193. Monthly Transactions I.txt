@@ -1,0 +1,55 @@
+/* Write your T-SQL query statement below */
+
+/* 1193. Monthly Transactions I */
+
+/*
+--first version 
+-- думаю можно решить другим способом более упрощенно, подтянуть case
+with 
+ApprovedTab as
+(
+    select
+        month = substring ( convert ( varchar, trans_date ), 1 , 7 ),
+        country = isnull ( country, 'null' ),
+        approved_count = count ( * ) ,
+        approved_total_amount = sum ( amount )
+    from Transactions
+    where state = 'approved'
+    group by substring ( convert ( varchar, trans_date ), 1 , 7 ), country
+
+),
+AllTab as
+(
+    select
+        month = substring ( convert ( varchar, trans_date ), 1 , 7 ),
+        country = isnull ( country, 'null' ),
+        trans_count = count ( * ),
+        trans_total_amount = sum ( amount )
+    from Transactions
+    group by substring ( convert ( varchar, trans_date ), 1 , 7 ), country
+)
+select
+    tab.month,
+    country = case when tab.country = 'null' then null else tab.country end,
+    tab.trans_count,
+    approved_count = isnull ( app.approved_count, 0 ),
+    tab.trans_total_amount,
+    approved_total_amount = isnull ( app.approved_total_amount, 0 )
+from
+    AllTab tab
+        left join
+    ApprovedTab app
+        on tab.country = app.country
+        and tab.month = app.month
+*/
+--second version, using others solutions
+--действительно легче и наглядно, не нужно ставить много костылей   
+select
+    month = left ( trans_date, 7 ),
+    country,
+    trans_count = count ( * ),
+    approved_count = sum ( case when state = 'approved' then 1 else 0 end ),
+    trans_total_amount = sum ( amount ),
+    approved_total_amount = sum ( case when state = 'approved' then amount else 0 end )
+from Transactions
+group by left ( trans_date, 7 ), country
