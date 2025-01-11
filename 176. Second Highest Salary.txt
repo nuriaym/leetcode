@@ -1,0 +1,7 @@
+/* Write your T-SQL query statement below */
+
+/* https://leetcode.com/problems/second-highest-salary */
+
+select SecondHighestSalary = max ( salary )
+from Employee
+where salary not in ( select max ( salary ) from Employee )
